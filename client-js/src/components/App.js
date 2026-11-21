@@ -1,6 +1,8 @@
 import { HeaderStats } from './HeaderStats.js';
 import { SeatMap } from './SeatMap.js';
 import { Legend } from './Legend.js';
+import { StatusMessage } from './StatusMessage.js';
+import { clicEnSilla } from '../services/SeatActions.js';
 import '../styles/App.css';
 
 // Componente raíz: arma la página y monta los demás componentes.
@@ -23,8 +25,8 @@ export class App {
     titulo.textContent = 'Distribución de Sillas';
     panel.append(titulo);
 
-    // El clic en una silla se conecta en HU-13
-    new SeatMap(panel, () => {}).mount();
+    new StatusMessage(panel).mount();
+    new SeatMap(panel, clicEnSilla).mount();
     new Legend(panel).mount();
 
     this.main.append(panel);
