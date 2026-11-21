@@ -9,6 +9,9 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.UUID;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import com.zeroc.Ice.Current;
 
@@ -50,6 +53,15 @@ public class BookingServiceImpl implements BookingService {
                 120000.0, 75000.0, 45000.0
         );
         initSeats();
+
+        // Barrido periodico: cada 1 s libera las sillas cuyo bloqueo ya vencio (HU-05).
+        // Hilo daemon para que no impida cerrar el servidor.
+        ScheduledExecutorService sweeper = Executors.newSingleThreadScheduledExecutor(r -> {
+            Thread t = new Thread(r, "lock-sweeper");
+            t.setDaemon(true);
+            return t;
+        });
+        sweeper.scheduleAtFixedRate(this::releaseExpiredLocks, 1, 1, TimeUnit.SECONDS);
     }
 
     private void initSeats() {
@@ -101,6 +113,26 @@ public class BookingServiceImpl implements BookingService {
         if (seat.state != SeatState.LOCKED) return false;
         long elapsedSeconds = (System.currentTimeMillis() - seat.lockTimestamp) / 1000L;
         return elapsedSeconds > seat.lockDurationSeconds;
+    }
+
+    // Libera las sillas LOCKED cuyo tiempo de retencion ya vencio.
+    // Corre en el hilo del barrido, asi que toma el mismo lock que lockSeat/confirmBooking/releaseSeat.
+    private void releaseExpiredLocks() {
+        try {
+            synchronized (lock) {
+                for (Seat seat : seatsMap.values()) {
+                    if (isLockExpired(seat)) {
+                        seat.state = SeatState.AVAILABLE;
+                        seat.lockedByClientId = "";
+                        seat.lockTimestamp = 0L;
+                        System.out.printf("[SWEEP] Bloqueo vencido: silla %s liberada.%n", seat.id);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            // Si una ejecucion lanza excepcion, scheduleAtFixedRate cancelaria las siguientes: se captura.
+            System.err.println("[SWEEP-ERROR] " + e);
+        }
     }
 
     // Debe llamarse con el lock tomado: recorre las sillas y escribe eventInfo (lectura + escritura compuesta).
