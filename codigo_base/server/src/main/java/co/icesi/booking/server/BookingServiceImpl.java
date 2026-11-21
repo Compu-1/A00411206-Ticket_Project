@@ -2,9 +2,10 @@ package co.icesi.booking.server;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.UUID;
 
 import com.zeroc.Ice.Current;
@@ -28,8 +29,11 @@ public class BookingServiceImpl implements BookingService {
     public static final long DEFAULT_LOCK_DURATION_SECONDS = 90;
 
     private final EventInfo eventInfo;
-    private final Map<String, Seat> seatsMap = new HashMap<>();
-    private final List<BookingRecord> bookingsList = new ArrayList<>();
+    // Colecciones thread-safe: Ice atiende cada llamada en un hilo distinto del pool.
+    // ConcurrentHashMap permite get/put/iterar desde varios hilos sin corromper el mapa.
+    private final Map<String, Seat> seatsMap = new ConcurrentHashMap<>();
+    // CopyOnWriteArrayList: pocas escrituras (una por reserva) y muchas lecturas (getMyBookings).
+    private final List<BookingRecord> bookingsList = new CopyOnWriteArrayList<>();
 
     public BookingServiceImpl() {
         this.eventInfo = new EventInfo(
