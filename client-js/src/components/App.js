@@ -1,12 +1,12 @@
 import { HeaderStats } from './HeaderStats.js';
 import { SeatMap } from './SeatMap.js';
 import { Legend } from './Legend.js';
+import { CartPanel } from './CartPanel.js';
 import { StatusMessage } from './StatusMessage.js';
 import { clicEnSilla } from '../services/SeatActions.js';
 import '../styles/App.css';
 
 // Componente raíz: arma la página y monta los demás componentes.
-// Aquí se montará después el carrito (Sprint 4).
 export class App {
   constructor(contenedor) {
     this.contenedor = contenedor;
@@ -30,6 +30,7 @@ export class App {
     new Legend(panel).mount();
 
     this.main.append(panel);
+    new CartPanel(this.main).mount();
     this.contenedor.append(this.main);
   }
 }
