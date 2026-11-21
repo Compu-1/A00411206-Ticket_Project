@@ -1,0 +1,38 @@
+.seat {
+  width: 36px;
+  height: 28px;
+  padding: 0;
+  font-size: 12px;
+  border: 1.5px solid #222;
+  border-radius: 4px;
+  background: #fff;
+  color: #222;
+  cursor: pointer;
+}
+
+.seat-disponible:hover {
+  background: #e8e8e8;
+}
+
+/* Seleccionada por mí: gris medio con borde grueso */
+.seat-mia {
+  background: #8a8a8a;
+  color: #fff;
+  border-width: 3px;
+  font-weight: bold;
+}
+
+/* Bloqueada por otro: gris claro con borde punteado */
+.seat-otro {
+  background: #e4e4e4;
+  color: #777;
+  border-style: dashed;
+  cursor: not-allowed;
+}
+
+/* Vendida: negro */
+.seat-vendida {
+  background: #222;
+  color: #fff;
+  cursor: not-allowed;
+}

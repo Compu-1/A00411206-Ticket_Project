@@ -1,0 +1,37 @@
+.seat-map {
+  text-align: center;
+}
+
+.escenario {
+  width: 60%;
+  margin: 0 auto 8px;
+  padding: 6px;
+  font-weight: bold;
+  background: #eee;
+  border: 2px dashed #555;
+  border-radius: 4px;
+}
+
+.zona-titulo {
+  margin: 14px 0 6px;
+  text-align: left;
+  font-size: 14px;
+}
+
+.seat-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+.seat-row-letra {
+  width: 20px;
+  font-weight: bold;
+}
+
+/* Pasillo entre las sillas 5 y 6 (el primer hijo es la letra de la fila) */
+.seat-row .seat:nth-child(6) {
+  margin-right: 18px;
+}

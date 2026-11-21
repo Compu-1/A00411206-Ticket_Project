@@ -1,0 +1,12 @@
+.panel-plano {
+  max-width: 640px;
+  padding: 16px 20px;
+  background: #fff;
+  border: 2px solid #222;
+  border-radius: 6px;
+}
+
+.panel-plano h2 {
+  margin: 0 0 12px;
+  font-size: 18px;
+}

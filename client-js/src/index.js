@@ -15,8 +15,9 @@ async function iniciar() {
     await connectionManager.connect();
     store.setConnection('conectado');
     const info = await BookingApi.getEventInfo();
-    console.log('getEventInfo:', info);
     store.setEvent(info);
+    // Carga inicial de las sillas (el refresco automático es HU-12)
+    store.setSeats(await BookingApi.getAllSeats());
   } catch (error) {
     console.error('Error de conexión:', error);
     store.setConnection('error');
