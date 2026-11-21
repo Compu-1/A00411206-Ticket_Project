@@ -1,0 +1,61 @@
+.header-stats {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin: 16px 24px 0;
+  padding: 16px 20px;
+  background: #fff;
+  border: 2px solid #222;
+  border-radius: 6px;
+}
+
+.header-stats h1 {
+  margin: 0 0 4px;
+  font-size: 22px;
+}
+
+.header-detalle,
+.header-precios {
+  margin: 0;
+  font-size: 14px;
+  color: #444;
+}
+
+.header-precios {
+  margin-top: 4px;
+  font-weight: bold;
+}
+
+.header-cajas {
+  display: flex;
+  gap: 10px;
+}
+
+.stat-caja {
+  min-width: 80px;
+  padding: 6px 10px;
+  text-align: center;
+  background: #fff;
+  border: 1.5px solid #222;
+  border-radius: 4px;
+}
+
+.stat-rotulo {
+  display: block;
+  font-size: 10px;
+  text-transform: uppercase;
+  color: #555;
+}
+
+.stat-valor {
+  display: block;
+  font-size: 18px;
+}
+
+/* OFFLINE se ve con fondo oscuro para que se note */
+.stat-valor.offline {
+  background: #222;
+  color: #fff;
+}
