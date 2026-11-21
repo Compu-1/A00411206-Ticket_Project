@@ -4,3 +4,8 @@ build/
 *.iml
 .vscode/
 bin/
+node_modules/
+dist/
+*.aux
+*.log
+*.synctex.gz

@@ -1,0 +1,35 @@
+# IDEs y sistema operativo
+.idea/
+*.iml
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Java / Gradle (codigo_base)
+.gradle/
+build/
+bin/
+out/
+
+# Node / Webpack (client-js)
+node_modules/
+dist/
+npm-debug.log*
+
+# Archivos generados por LaTeX (enunciado)
+*.aux
+*.log
+*.synctex.gz
+*.out
+*.toc
+*.fls
+*.fdb_latexmk
+
+# Variables de entorno locales
+.env
+.env.local
+
+
+PLAN_SPRINTS.md
+REQUERIMIENTOS.md
+BITACORA.md

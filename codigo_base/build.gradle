@@ -34,8 +34,14 @@ tasks.register('runServer') {
     dependsOn ':server:runServer'
 }
 
-tasks.register('runClient') {
+evaluationDependsOn(':client')
+
+// JavaExec propio en la raiz para poder pasar argumentos: ./gradlew runClient --args="--test-concurrency"
+tasks.register('runClient', JavaExec) {
     group = 'application'
     description = 'Ejecuta el cliente Java de prueba de Reserva de Boletas'
-    dependsOn ':client:runClient'
+    dependsOn ':client:classes'
+    mainClass = 'co.icesi.booking.client.BookingClientApp'
+    classpath = project(':client').sourceSets.main.runtimeClasspath
+    standardInput = System.in
 }

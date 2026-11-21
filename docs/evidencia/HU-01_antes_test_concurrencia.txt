@@ -1,0 +1,37 @@
+EVIDENCIA "ANTES" - HU-01 (fecha: 2026-11-20)
+Comando: ./gradlew runClient --args="--test-concurrency"
+Servidor: sin correccion de concurrencia (BookingServiceImpl original)
+(Los caracteres acentuados se veian corruptos en la consola de Windows; se normalizaron aqui.)
+
+==========================================================================
+  CLIENTE DE PRUEBAS - RESERVA DE BOLETAS ZEROC ICE (COMPU 1)
+==========================================================================
+[INFO] Conectando a: BookingService:default -h localhost -p 10000
+[OK] Conexion establecida con exito con el servidor RPC.
+[INFO] Identificador de sesion de este cliente: CLI-7CD864
+
+==========================================================================
+  PRUEBA DE CONCURRENCIA: 10 HILOS COMPITIENDO POR LA SILLA 'A-1'
+==========================================================================
+[INFO] Disparando 10 peticiones simultaneas...
+   [+] CONCURRENT-CLIENT-6: Bloqueo exitoso! (Expira: 1795220291407)
+   [+] CONCURRENT-CLIENT-9: Bloqueo exitoso! (Expira: 1795220291407)
+   [+] CONCURRENT-CLIENT-4: Bloqueo exitoso! (Expira: 1795220291407)
+   [+] CONCURRENT-CLIENT-8: Bloqueo exitoso! (Expira: 1795220291407)
+   [+] CONCURRENT-CLIENT-5: Bloqueo exitoso! (Expira: 1795220291407)
+   [+] CONCURRENT-CLIENT-7: Bloqueo exitoso! (Expira: 1795220291407)
+   [+] CONCURRENT-CLIENT-3: Bloqueo exitoso! (Expira: 1795220291407)
+   [+] CONCURRENT-CLIENT-1: Bloqueo exitoso! (Expira: 1795220291407)
+   [+] CONCURRENT-CLIENT-10: Bloqueo exitoso! (Expira: 1795220291407)
+   [+] CONCURRENT-CLIENT-2: Bloqueo exitoso! (Expira: 1795220291407)
+
+--- RESULTADOS DE LA PRUEBA CONCURRENTE ---
+Peticiones que creyeron ganar el bloqueo : 10
+Peticiones correctamente rechazadas     : 0
+ [VULNERABILIDAD CONFIRMADA]: CONDICION DE CARRERA DETECTADA!
+   Mas de un cliente (10) logro bloquear la misma silla simultaneamente.
+   Causa: Ausencia de sincronizacion atomica en 'lockSeat()' del servidor.
+   Mision del estudiante: Implementar sincronizacion thread-safe en Java.
+==========================================================================
+
+CONCLUSION: 10/10 hilos obtuvieron el bloqueo de A-1 (esperado tras la correccion: 1/10).
