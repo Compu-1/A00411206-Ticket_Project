@@ -27,6 +27,9 @@ export default {
     new HtmlWebpackPlugin({ template: './src/index.html' }),
   ],
 
+  // El archivo generado por slice2js usa "require" de forma dinámica; es inofensivo
+  ignoreWarnings: [{ module: /generated[\\/]BookingService\.js/ }],
+
   // Servidor de desarrollo en el puerto 3000
   devServer: {
     port: 3000,

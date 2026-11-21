@@ -185,6 +185,9 @@ importers:
       html-webpack-plugin:
         specifier: ^5.6.8
         version: 5.6.8(webpack@5.113.0)
+      slice2js:
+        specifier: 3.7.110
+        version: 3.7.110
       style-loader:
         specifier: ^4.0.0
         version: 4.0.0(webpack@5.113.0)
@@ -1335,6 +1338,11 @@ packages:
   side-channel@1.1.1:
     resolution: {integrity: sha512-6x6dK6zJdpTzF4sQeNYxwtvBzf6Eg4GtlesS94HOvTudUeyK2WXAaIfmDgsyslYrRBeFIlsi54AYsFGUuhmvrQ==}
     engines: {node: '>= 0.4'}
+
+  slice2js@3.7.110:
+    resolution: {integrity: sha512-eZSokSttdF+I7sIt2/0WRQgSpmXhwN0FK0OtdcxLy54QLAgdf7EvsGr7uRvwCkAolK0F3tL2cW2XirmeaEHusg==}
+    engines: {node: '>=14.0.0'}
+    hasBin: true
 
   source-map-js@1.2.4:
     resolution: {integrity: sha512-J7ZjMvHd9O1fcT/5V09QWaaSl2BbWx3F6O08spde82Namf9UB0GxRVIPiNbVsdKkoizHiSpTodo3vp2bAy91MA==}
@@ -2746,6 +2754,8 @@ snapshots:
       side-channel-list: 1.0.1
       side-channel-map: 1.0.1
       side-channel-weakmap: 1.0.2
+
+  slice2js@3.7.110: {}
 
   source-map-js@1.2.4: {}
 

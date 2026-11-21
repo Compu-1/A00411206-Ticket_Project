@@ -4,6 +4,7 @@
   "description": "",
   "scripts": {
     "start": "webpack serve --mode development",
+    "slice": "node scripts/slice.mjs",
     "build": "webpack --mode production"
   },
   "keywords": [],
@@ -17,10 +18,10 @@
     }
   },
   "packageManager": "pnpm@12.21.0",
-  "type": "module",
   "devDependencies": {
     "css-loader": "^7.1.5",
     "html-webpack-plugin": "^5.6.8",
+    "slice2js": "3.7.110",
     "style-loader": "^4.0.0",
     "webpack": "^5.113.0",
     "webpack-cli": "^7.3.1",
@@ -30,3 +31,4 @@
     "ice": "~3.7.110"
   }
 }
+
