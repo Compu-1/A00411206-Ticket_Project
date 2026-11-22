@@ -2,6 +2,7 @@ import { eventBus } from '../state/EventBus.js';
 import { store } from '../state/Store.js';
 import { formatPrice } from '../utils/format.js';
 import { liberarTodas } from '../services/CartActions.js';
+import { CountdownTimer } from './CountdownTimer.js';
 import { CartItem } from './CartItem.js';
 import '../styles/CartPanel.css';
 
@@ -37,7 +38,9 @@ export class CartPanel {
       this.render();
     });
 
-    this.panel.append(titulo, this.vacio, this.lista, this.total, this.botonLiberar);
+    this.panel.append(titulo);
+    new CountdownTimer(this.panel).mount();
+    this.panel.append(this.vacio, this.lista, this.total, this.botonLiberar);
     this.contenedor.append(this.panel);
 
     // El panel se redibuja solo cada vez que cambia el carrito
