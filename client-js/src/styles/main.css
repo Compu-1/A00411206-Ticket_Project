@@ -1,3 +1,15 @@
+/* La página ocupa toda la pantalla: encabezado arriba y el resto para plano y resumen */
+html,
+body,
+#app {
+  height: 100%;
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+}
+
 body {
   margin: 0;
   font-family: Arial, sans-serif;
@@ -7,8 +19,9 @@ body {
 
 .app-main {
   display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;
+  flex: 1;
+  min-height: 0;
+  align-items: stretch;
   gap: 24px;
   padding: 24px;
 }

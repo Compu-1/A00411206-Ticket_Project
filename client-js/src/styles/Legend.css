@@ -22,5 +22,10 @@
   height: 16px;
   border: 1.5px solid #222;
   border-radius: 3px;
+}
+
+/* Los colores de mía, otro y vendida vienen de las clases seat-* (SeatButton.css).
+   Disponible no tiene fondo propio ahí, por eso se pone aquí. */
+.legend-muestra.seat-disponible {
   background: #fff;
 }

@@ -1,12 +1,21 @@
 .countdown {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin: 0 0 12px;
-  padding: 8px;
-  text-align: center;
-  font-size: 16px;
-  font-weight: bold;
+  padding: 10px 12px;
+  font-size: 13px;
   background: #eee;
   border: 1.5px solid #222;
   border-radius: 4px;
+}
+
+.countdown[hidden] {
+  display: none;
+}
+
+.countdown strong {
+  font-size: 20px;
 }
 
 /* Alerta cuando quedan 15 s o menos */

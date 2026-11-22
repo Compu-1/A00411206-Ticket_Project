@@ -1,5 +1,9 @@
 .panel-carrito {
-  width: 300px;
+  display: flex;
+  flex-direction: column;
+  width: 340px;
+  flex-shrink: 0;
+  overflow-y: auto;
   padding: 16px 20px;
   background: #fff;
   border: 2px solid #222;
@@ -9,6 +13,12 @@
 .panel-carrito h2 {
   margin: 0 0 12px;
   font-size: 18px;
+}
+
+.cart-subtitulo {
+  margin: 0 0 8px;
+  font-size: 13px;
+  color: #555;
 }
 
 .cart-vacio {
@@ -23,33 +33,82 @@
   list-style: none;
 }
 
+/* Cada silla es una tarjeta: nombre a la izquierda, precio y quitar a la derecha */
 .cart-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 8px;
-  padding: 6px 0;
+  margin-bottom: 8px;
+  padding: 8px 10px;
   font-size: 14px;
-  border-bottom: 1px solid #ddd;
+  border: 1.5px solid #ccc;
+  border-radius: 4px;
 }
 
-.cart-item-quitar,
-.cart-liberar {
-  padding: 4px 10px;
+.cart-item-nombre {
+  font-weight: bold;
+}
+
+.cart-item-precio {
+  margin-left: auto;
+}
+
+.cart-item-quitar {
+  padding: 0 6px;
+  font-size: 16px;
   cursor: pointer;
   background: #fff;
   border: 1.5px solid #222;
   border-radius: 4px;
 }
 
-.cart-item-quitar:disabled,
-.cart-liberar:disabled {
-  cursor: not-allowed;
-  opacity: 0.5;
+/* El pie se pega abajo del panel */
+.cart-pie {
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 2px solid #ddd;
+}
+
+.cart-fila-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 12px;
+  font-size: 14px;
 }
 
 .cart-total {
-  margin: 12px 0;
-  font-size: 16px;
+  font-size: 22px;
+}
+
+.cart-confirmar,
+.cart-liberar {
+  display: block;
+  width: 100%;
+  margin-bottom: 8px;
+  padding: 10px;
+  font-size: 14px;
+  cursor: pointer;
+  border: 1.5px solid #222;
+  border-radius: 4px;
+}
+
+/* Confirmar: oscuro. Liberar: solo borde */
+.cart-confirmar {
   font-weight: bold;
+  background: #222;
+  color: #fff;
+}
+
+.cart-liberar {
+  background: #fff;
+  color: #222;
+}
+
+.cart-item-quitar:disabled,
+.cart-confirmar:disabled,
+.cart-liberar:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
 }

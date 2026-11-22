@@ -13,6 +13,10 @@ export class CountdownTimer {
   mount() {
     this.div = document.createElement('div');
     this.div.className = 'countdown';
+    const rotulo = document.createElement('span');
+    rotulo.textContent = 'Tiempo de retención:';
+    this.tiempo = document.createElement('strong');
+    this.div.append(rotulo, this.tiempo);
     this.contenedor.append(this.div);
 
     // Un tick por segundo; también se redibuja si cambia el carrito
@@ -32,7 +36,8 @@ export class CountdownTimer {
 
     const mm = String(Math.floor(segundos / 60)).padStart(2, '0');
     const ss = String(segundos % 60).padStart(2, '0');
-    this.div.textContent = `Tiempo restante (${proxima.seat.id}): ${mm}:${ss}`;
+    this.tiempo.textContent = `${mm}:${ss}`;
+    this.div.title = `Silla más próxima a vencer: ${proxima.seat.id}`;
     this.div.classList.toggle('urgente', segundos <= 15);
 
     // Revisa todas las sillas vencidas (no solo la próxima)

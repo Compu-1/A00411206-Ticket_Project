@@ -8,7 +8,7 @@ const NOMBRES_ZONA = {
   ZONEGENERAL: 'General',
 };
 
-// Una fila del carrito: silla, zona, precio y botón para quitarla
+// Una tarjeta del carrito: "Silla A-1 (VIP)", precio y botón para quitarla
 export class CartItem {
   constructor(item) {
     this.item = item;
@@ -21,20 +21,25 @@ export class CartItem {
     const li = document.createElement('li');
     li.className = 'cart-item';
 
-    const info = document.createElement('span');
-    info.textContent =
-      `${seat.id} · ${NOMBRES_ZONA[seat.zone.name] || seat.zone.name} · ${formatPrice(seat.price)}`;
+    const nombre = document.createElement('span');
+    nombre.className = 'cart-item-nombre';
+    nombre.textContent = `Silla ${seat.id} (${NOMBRES_ZONA[seat.zone.name] || seat.zone.name})`;
+
+    const precio = document.createElement('span');
+    precio.className = 'cart-item-precio';
+    precio.textContent = formatPrice(seat.price);
 
     const boton = document.createElement('button');
     boton.className = 'cart-item-quitar';
-    boton.textContent = 'Quitar';
+    boton.textContent = '×';
+    boton.title = `Quitar silla ${seat.id}`;
     boton.addEventListener('click', async () => {
       boton.disabled = true; // evita clics repetidos mientras responde el servidor
       await quitarSilla(seat.id);
       boton.disabled = false;
     });
 
-    li.append(info, boton);
+    li.append(nombre, precio, boton);
     return li;
   }
 }
