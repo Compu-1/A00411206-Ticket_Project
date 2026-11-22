@@ -1,0 +1,149 @@
+.modal-fondo {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.modal-fondo[hidden] {
+  display: none;
+}
+
+.modal-caja {
+  width: 360px;
+  max-width: 90%;
+  padding: 0 20px 20px;
+  background: #fff;
+  border: 2px solid #222;
+  border-radius: 6px;
+}
+
+/* Barra superior: "Flujo: Modal de Confirmación" y la X */
+.modal-barra {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 -20px 16px;
+  padding: 10px 20px;
+  font-size: 13px;
+  font-weight: bold;
+  background: #f4f4f4;
+  border-bottom: 2px solid #222;
+}
+
+.modal-caja h2 {
+  margin: 0 0 4px;
+  font-size: 18px;
+}
+
+.modal-subtitulo {
+  margin: 0 0 12px;
+  font-size: 13px;
+  color: #555;
+}
+
+/* Cuadro gris con sillas, valor total y tiempo */
+.modal-resumen {
+  margin-bottom: 14px;
+  padding: 8px 10px;
+  background: #eee;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.modal-resumen p {
+  margin: 0;
+  font-size: 13px;
+}
+
+.modal-tiempo {
+  margin-top: 4px !important;
+  font-size: 11px !important;
+  color: #555;
+}
+
+.modal-caja label {
+  display: block;
+  margin-bottom: 12px;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.modal-caja input {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  margin-top: 6px;
+  padding: 10px;
+  font-size: 14px;
+  font-weight: normal;
+  border: 1.5px solid #222;
+  border-radius: 4px;
+}
+
+.modal-error {
+  min-height: 18px;
+  margin: 0 0 8px;
+  color: #b00020;
+  font-size: 14px;
+}
+
+.modal-caja button {
+  display: block;
+  width: 100%;
+  margin-bottom: 8px;
+  padding: 10px;
+  font-size: 14px;
+  cursor: pointer;
+  background: #fff;
+  border: 1.5px solid #222;
+  border-radius: 4px;
+}
+
+/* Finalizar y Pagar: botón oscuro como en el mockup */
+.modal-caja .modal-pagar {
+  font-weight: bold;
+  background: #222;
+  color: #fff;
+}
+
+.modal-caja .modal-cerrar {
+  width: auto;
+  margin: 0;
+  padding: 0 6px;
+  border: none;
+  background: none;
+}
+
+.modal-caja button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* Comprobante: caja punteada con el código en una caja gris */
+.receipt {
+  margin: 20px 0 12px;
+  padding: 16px;
+  text-align: center;
+  font-size: 13px;
+  border: 2px dashed #222;
+}
+
+.receipt h3 {
+  margin: 0 0 8px;
+  font-size: 14px;
+}
+
+.receipt p {
+  margin: 6px 0;
+}
+
+.receipt-codigo {
+  padding: 8px;
+  font-size: 18px;
+  font-weight: bold;
+  background: #eee;
+  border: 2px solid #222;
+}

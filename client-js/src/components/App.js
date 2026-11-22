@@ -2,6 +2,7 @@ import { HeaderStats } from './HeaderStats.js';
 import { SeatMap } from './SeatMap.js';
 import { Legend } from './Legend.js';
 import { CartPanel } from './CartPanel.js';
+import { CheckoutModal } from './CheckoutModal.js';
 import { StatusMessage } from './StatusMessage.js';
 import { clicEnSilla } from '../services/SeatActions.js';
 import '../styles/App.css';
@@ -32,5 +33,8 @@ export class App {
     this.main.append(panel);
     new CartPanel(this.main).mount();
     this.contenedor.append(this.main);
+
+    // Modal de compra: queda oculto hasta que se pulsa "Confirmar reserva"
+    new CheckoutModal(this.contenedor).mount();
   }
 }
