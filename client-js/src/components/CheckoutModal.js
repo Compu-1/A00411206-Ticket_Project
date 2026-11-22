@@ -2,9 +2,12 @@ import { eventBus } from '../state/EventBus.js';
 import { store } from '../state/Store.js';
 import { BookingApi } from '../services/BookingApi.js';
 import { seatPolling } from '../services/SeatPolling.js';
+import { resincronizar } from '../services/Resync.js';
+import { mensajeDeError, esErrorDeConexion } from '../services/errorMapper.js';
 import { getClientId } from '../utils/clientId.js';
 import { formatPrice } from '../utils/format.js';
 import { nombreValido, correoValido } from '../utils/validators.js';
+import { notificar } from '../utils/notificar.js';
 import { Receipt } from './Receipt.js';
 import '../styles/CheckoutModal.css';
 
@@ -15,6 +18,7 @@ export class CheckoutModal {
     this.contenedor = contenedor;
     this.reloj = null;
     this.enFormulario = false;
+    this.enviando = false; // hay una compra esperando respuesta del servidor
   }
 
   mount() {
@@ -28,6 +32,10 @@ export class CheckoutModal {
     this.contenedor.append(this.fondo);
 
     eventBus.on('checkout:abrir', () => this.abrir());
+    // Sin conexión no se puede pagar: el botón se deshabilita y se habilita al volver
+    eventBus.on('connection:changed', () => {
+      if (this.botonPagar && !this.enviando) this.botonPagar.disabled = !store.estaConectado();
+    });
     // Si el carrito se vacía (por expiración) con el formulario abierto, se cierra
     eventBus.on('cart:changed', () => {
       if (this.enFormulario && store.get('cart').length === 0) this.cerrar();
@@ -115,6 +123,7 @@ export class CheckoutModal {
     this.botonPagar.type = 'submit';
     this.botonPagar.className = 'modal-pagar';
     this.botonPagar.textContent = 'Finalizar y Pagar';
+    this.botonPagar.disabled = !store.estaConectado();
 
     const cancelar = document.createElement('button');
     cancelar.type = 'button';
@@ -151,27 +160,47 @@ export class CheckoutModal {
       this.mensaje.textContent = 'Escribe un correo válido (ej: nombre@correo.com).';
       return;
     }
+    if (!store.estaConectado()) {
+      notificar('Sin conexión con el servidor.', 'error');
+      return;
+    }
 
     this.mensaje.textContent = '';
+    this.enviando = true;
     this.botonPagar.disabled = true; // evita doble envío mientras responde el servidor
+    this.botonPagar.textContent = 'Procesando...';
     const ids = store.get('cart').map((item) => item.seat.id);
 
     try {
       const resultado = await BookingApi.confirmBooking(ids, getClientId(), nombre.trim(), correo.trim());
+      this.enviando = false;
       if (resultado.success) {
         this.mostrarComprobante(resultado);
-      } else {
-        this.mensaje.textContent = resultado.message;
-        this.botonPagar.disabled = false;
+        seatPolling.refrescar();
+        return;
       }
+      notificar(resultado.message, 'error');
     } catch (error) {
-      // Las excepciones Slice (InvalidBooking, Booking, LockExpired) traen "reason"
+      // Las excepciones Slice (InvalidBooking, Booking, LockExpired) se traducen en errorMapper
       console.error('Error al confirmar:', error);
-      this.mensaje.textContent = error.reason || 'No se pudo confirmar la reserva. Intenta de nuevo.';
-      this.botonPagar.disabled = false;
+      notificar(mensajeDeError(error), 'error');
+      if (esErrorDeConexion(error)) {
+        // Sin respuesta no sabemos si se compró: al reconectar se resincroniza el carrito
+        this.restaurarBoton();
+        return;
+      }
     }
-    // Pase lo que pase, se refresca el plano para ver el estado real
-    seatPolling.refrescar();
+    // Falló: se pide el estado real al servidor (si el carrito queda vacío, el modal se cierra)
+    this.restaurarBoton();
+    await resincronizar();
+  }
+
+  // Deja el botón de pagar listo para otro intento (solo si hay conexión)
+  restaurarBoton() {
+    this.enviando = false;
+    if (!this.botonPagar) return;
+    this.botonPagar.textContent = 'Finalizar y Pagar';
+    this.botonPagar.disabled = !store.estaConectado();
   }
 
   mostrarComprobante(resultado) {

@@ -23,6 +23,11 @@ class Store {
     eventBus.emit(`${clave}:changed`, valor);
   }
 
+  // ¿Hay comunicación con el servidor?
+  estaConectado() {
+    return this.state.connection === 'conectado';
+  }
+
   setEvent(event) { this.set('event', event); }
   setSeats(seats) { this.set('seats', seats); }
   setCart(cart) { this.set('cart', cart); }

@@ -35,3 +35,9 @@
 .seat-row .seat:nth-child(6) {
   margin-right: 18px;
 }
+
+/* Sin conexión el plano no se puede usar */
+.seat-map.sin-conexion {
+  opacity: 0.5;
+  pointer-events: none;
+}

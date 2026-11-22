@@ -1,5 +1,6 @@
 import { eventBus } from '../state/EventBus.js';
 import { store } from '../state/Store.js';
+import { notificar } from '../utils/notificar.js';
 import { quitarSilla } from '../services/CartActions.js';
 import '../styles/CountdownTimer.css';
 
@@ -48,10 +49,12 @@ export class CountdownTimer {
 
   // Al llegar a 0: libera en el servidor, quita del carrito y avisa
   async expirar(seatId) {
+    // Sin conexión no se puede liberar: al reconectar, la resincronización limpia el carrito
+    if (!store.estaConectado()) return;
     if (this.expirando.includes(seatId)) return;
     this.expirando.push(seatId);
     await quitarSilla(seatId);
     this.expirando = this.expirando.filter((id) => id !== seatId);
-    eventBus.emit('aviso', `Se acabó el tiempo: la silla ${seatId} fue liberada.`);
+    notificar(`Se acabó el tiempo: la silla ${seatId} fue liberada.`, 'aviso');
   }
 }

@@ -24,7 +24,14 @@ export class SeatMap {
     this.contenedor.append(this.plano);
 
     eventBus.on('seats:changed', () => this.render());
+    // Sin conexión no se puede bloquear: el plano se ve apagado y no responde
+    eventBus.on('connection:changed', () => this.actualizarConexion());
+    this.actualizarConexion();
     this.render();
+  }
+
+  actualizarConexion() {
+    this.plano.classList.toggle('sin-conexion', !store.estaConectado());
   }
 
   render() {

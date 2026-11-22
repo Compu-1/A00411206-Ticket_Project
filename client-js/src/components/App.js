@@ -3,7 +3,7 @@ import { SeatMap } from './SeatMap.js';
 import { Legend } from './Legend.js';
 import { CartPanel } from './CartPanel.js';
 import { CheckoutModal } from './CheckoutModal.js';
-import { StatusMessage } from './StatusMessage.js';
+import { Toast } from './Toast.js';
 import { clicEnSilla } from '../services/SeatActions.js';
 import '../styles/App.css';
 
@@ -14,6 +14,7 @@ export class App {
   }
 
   mount() {
+    new Toast(this.contenedor).mount();
     new HeaderStats(this.contenedor).mount();
 
     this.main = document.createElement('main');
@@ -26,7 +27,6 @@ export class App {
     titulo.textContent = 'Distribución de Sillas';
     panel.append(titulo);
 
-    new StatusMessage(panel).mount();
     new SeatMap(panel, clicEnSilla).mount();
     new Legend(panel).mount();
 

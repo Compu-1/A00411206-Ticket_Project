@@ -1,6 +1,7 @@
 import './styles/main.css';
 import { connectionManager } from './services/ConnectionManager.js';
 import { seatPolling } from './services/SeatPolling.js';
+import { reconnection } from './services/Reconnection.js';
 import { recuperarCarrito } from './services/CartRecovery.js';
 import { store } from './state/Store.js';
 import { App } from './components/App.js';
@@ -11,6 +12,8 @@ app.mount();
 
 // El polling arranca solo cuando la conexión pasa a 'conectado'
 seatPolling.init();
+// Si la conexión pasa a 'error', reintenta con espera creciente
+reconnection.init();
 
 // Conecta con el servidor
 async function iniciar() {

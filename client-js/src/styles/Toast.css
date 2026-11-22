@@ -1,0 +1,23 @@
+.toast-lista {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 2000; /* encima del modal */
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 340px;
+}
+
+.toast {
+  padding: 10px 14px;
+  font-size: 14px;
+  color: #fff;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+}
+
+.toast-exito { background: #1b7a3a; }
+.toast-error { background: #b3261e; }
+.toast-aviso { background: #8a5a00; }

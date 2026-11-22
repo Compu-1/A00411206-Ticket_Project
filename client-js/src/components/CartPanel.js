@@ -65,6 +65,7 @@ export class CartPanel {
 
     // El panel se redibuja solo cada vez que cambia el carrito
     eventBus.on('cart:changed', () => this.render());
+    eventBus.on('connection:changed', () => this.render());
     this.render();
   }
 
@@ -78,10 +79,11 @@ export class CartPanel {
     this.total.textContent = formatPrice(suma);
     this.subtitulo.textContent = `Sillas en retención (${carrito.length}):`;
 
-    // Los botones siempre se ven; sin sillas quedan deshabilitados
+    // Los botones siempre se ven; sin sillas o sin conexión quedan deshabilitados
     const hayItems = carrito.length > 0;
+    const puedeActuar = hayItems && store.estaConectado();
     this.vacio.hidden = hayItems;
-    this.botonConfirmar.disabled = !hayItems;
-    this.botonLiberar.disabled = !hayItems;
+    this.botonConfirmar.disabled = !puedeActuar;
+    this.botonLiberar.disabled = !puedeActuar;
   }
 }

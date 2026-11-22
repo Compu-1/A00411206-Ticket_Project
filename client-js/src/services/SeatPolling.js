@@ -21,8 +21,8 @@ class SeatPolling {
       store.setSeats(seats);
       store.setEvent(info);
     } catch (error) {
+      // Si fue por conexión, BookingApi ya pasó el Store a OFFLINE (y el polling se pausa)
       console.error('Error al refrescar:', error);
-      store.setConnection('error'); // pasa a OFFLINE y el polling se pausa
     } finally {
       this.ocupado = false;
     }
