@@ -32,3 +32,21 @@
   border: 1.5px solid #222;
   border-radius: 4px;
 }
+
+/* Pantallas angostas: el plano y el resumen se apilan y la página se desplaza */
+@media (max-width: 900px) {
+  html,
+  body,
+  #app {
+    height: auto;
+  }
+
+  .app-main {
+    flex-direction: column;
+    padding: 12px;
+  }
+
+  .panel-plano {
+    padding: 12px;
+  }
+}

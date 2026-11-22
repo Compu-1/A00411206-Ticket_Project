@@ -35,8 +35,10 @@ export class CartItem {
     boton.title = `Quitar silla ${seat.id}`;
     boton.addEventListener('click', async () => {
       boton.disabled = true; // evita clics repetidos mientras responde el servidor
+      boton.textContent = '...';
       await quitarSilla(seat.id);
       boton.disabled = false;
+      boton.textContent = '×';
     });
 
     li.append(nombre, precio, boton);

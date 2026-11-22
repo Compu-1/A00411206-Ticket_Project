@@ -28,7 +28,14 @@ export class SeatButton {
     this.elemento = document.createElement('button');
     this.elemento.className = 'seat';
     this.elemento.textContent = seat.number;
-    this.elemento.addEventListener('click', () => onClick(this.seat, this.estado));
+    this.elemento.addEventListener('click', async () => {
+      // Mientras el servidor responde la silla se ve ocupada y no acepta más clics
+      this.elemento.disabled = true;
+      this.elemento.classList.add('seat-cargando');
+      await onClick(this.seat, this.estado);
+      this.elemento.disabled = false;
+      this.elemento.classList.remove('seat-cargando');
+    });
     this.actualizar(seat);
   }
 
@@ -37,6 +44,7 @@ export class SeatButton {
     this.seat = seat;
     this.estado = calcularEstado(seat);
     this.elemento.className = 'seat seat-' + this.estado;
+    if (this.elemento.disabled) this.elemento.classList.add('seat-cargando');
     this.elemento.title = `${seat.id} - ${TEXTOS[this.estado]}`;
   }
 }

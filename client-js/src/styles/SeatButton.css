@@ -18,7 +18,7 @@
 
 /* Seleccionada por mí: gris medio con borde grueso */
 .seat-mia {
-  background: #8a8a8a;
+  background: #666; /* texto blanco con contraste 5.7:1 */
   color: #fff;
   border-width: 3px;
   font-weight: bold;
@@ -27,7 +27,7 @@
 /* Bloqueada por otro: gris claro con borde punteado */
 .seat-otro {
   background: #e4e4e4;
-  color: #777;
+  color: #444; /* sobre gris claro: contraste 7:1 */
   border-style: dashed;
   cursor: not-allowed;
 }
@@ -37,4 +37,18 @@
   background: #222;
   color: #fff;
   cursor: not-allowed;
+}
+
+/* Esperando respuesta del servidor */
+.seat-cargando {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+@media (max-width: 600px) {
+  .seat {
+    min-width: 22px;
+    height: 30px;
+    font-size: 11px;
+  }
 }

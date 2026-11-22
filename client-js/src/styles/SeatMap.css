@@ -41,3 +41,17 @@
   opacity: 0.5;
   pointer-events: none;
 }
+
+@media (max-width: 600px) {
+  .seat-row {
+    gap: 3px;
+  }
+
+  .seat-row .seat:nth-child(6) {
+    margin-right: 10px;
+  }
+
+  .escenario {
+    width: 90%;
+  }
+}

@@ -52,7 +52,9 @@ export class CartPanel {
     this.botonLiberar.textContent = 'Liberar Sillas';
     this.botonLiberar.addEventListener('click', async () => {
       this.botonLiberar.disabled = true;
+      this.botonLiberar.textContent = 'Liberando...';
       await liberarTodas();
+      this.botonLiberar.textContent = 'Liberar Sillas';
       this.render();
     });
 
