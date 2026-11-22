@@ -10,6 +10,12 @@ application {
     mainClass = 'co.icesi.booking.server.BookingServerApp'
 }
 
+// Siempre re-ejecutar los tests (nunca UP-TO-DATE ni FROM-CACHE)
+tasks.withType(Test).configureEach {
+    outputs.upToDateWhen { false }
+    outputs.cacheIf { false }
+}
+
 task runServer(type: JavaExec) {
     mainClass = 'co.icesi.booking.server.BookingServerApp'
     classpath = sourceSets.main.runtimeClasspath
