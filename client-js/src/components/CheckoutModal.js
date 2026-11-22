@@ -206,6 +206,7 @@ export class CheckoutModal {
   mostrarComprobante(resultado) {
     this.enFormulario = false;
     clearInterval(this.reloj);
+    eventBus.emit('checkout:exito'); // MyBookings recarga la lista
     store.setCart([]); // las sillas ya fueron compradas, el carrito queda vacío
 
     const volver = document.createElement('button');
