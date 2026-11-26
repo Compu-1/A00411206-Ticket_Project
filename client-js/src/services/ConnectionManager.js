@@ -6,8 +6,8 @@ import '../generated/BookingService.js';
 const Ice = window.Ice;
 const BookingApp = window.BookingApp;
 
-// Host del servidor: localhost por defecto; en la VM se cambia con ?host=IP en la URL
-const HOST_POR_DEFECTO = 'localhost';
+// Host del servidor (el servidor Java corre en esta misma máquina)
+const HOST = 'localhost';
 const PUERTO_WS = 10002;
 
 // Maneja el Communicator de Ice y el proxy al servidor (solo WebSocket)
@@ -17,17 +17,10 @@ class ConnectionManager {
     this.proxy = null;
   }
 
-  // Lee el host de la URL (?host=...) o usa el de por defecto
-  obtenerHost() {
-    const params = new URLSearchParams(window.location.search);
-    return params.get('host') || HOST_POR_DEFECTO;
-  }
-
   // Crea el communicator y el proxy tipado BookingService
   async connect() {
-    const host = this.obtenerHost();
     this.communicator = Ice.initialize();
-    const base = this.communicator.stringToProxy(`BookingService:ws -h ${host} -p ${PUERTO_WS}`);
+    const base = this.communicator.stringToProxy(`BookingService:ws -h ${HOST} -p ${PUERTO_WS}`);
     this.proxy = await BookingApp.BookingServicePrx.checkedCast(base);
     if (!this.proxy) {
       throw new Error('No se pudo conectar con BookingService');
